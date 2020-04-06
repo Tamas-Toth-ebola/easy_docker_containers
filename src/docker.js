@@ -87,19 +87,19 @@ var runCommand = async (command, containerName, callback) => {
   switch (command) {
     case "exec":
       cmd = [
-        "gnome-terminal",
-        "--",
-        "sh",
-        "-c",
+        "x-terminal-emulator",
+        "-e",
+        "bash",
+        "-c",      
         "'docker exec -it " + containerName + " bash; exec $SHELL'"
       ];
       GLib.spawn_command_line_async(cmd.join(" "));
       break;
     case "logs":
       cmd = [
-        "gnome-terminal",
-        "--",
-        "sh",
+        "x-terminal-emulator",
+        "-e",
+        "bash",
         "-c",
         "'docker logs -f --tail 2000 " + containerName + "; exec $SHELL' "
       ];

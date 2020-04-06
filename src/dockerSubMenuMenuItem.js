@@ -39,7 +39,7 @@ var DockerSubMenu = GObject.registerClass(
       switch (getStatus(containerStatusMessage)) {
         case "stopped":
           this.insert_child_at_index(
-            createIcon("process-stop-symbolic", "status-stopped"),
+            createIcon("package-x-generic-symbolic", "status-stopped"),
             1
           );
           this.menu.addMenuItem(
@@ -52,7 +52,7 @@ var DockerSubMenu = GObject.registerClass(
           break;
         case "running":
           this.insert_child_at_index(
-            createIcon("system-run-symbolic", "status-running"),
+            createIcon("package-x-generic-symbolic", "status-running"),
             1
           );
           this.menu.addMenuItem(
@@ -109,7 +109,7 @@ var DockerSubMenu = GObject.registerClass(
         new DockerMenuItem(
           containerName,
           "logs",
-          createIcon("emblem-documents-symbolic")
+          createIcon("x-office-document-symbolic")
         )
       );
     }

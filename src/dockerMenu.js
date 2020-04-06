@@ -16,13 +16,15 @@ var DockerMenu = GObject.registerClass(
     _init(menuAlignment, nameText) {
       super._init(menuAlignment, nameText);
 
-      const hbox = new St.BoxLayout({ style_class: "panel-status-menu-box" });
-      const gicon = Gio.icon_new_for_string(Me.path + "/docker.svg");
-      const dockerIcon = new St.Icon({ gicon: gicon, icon_size: "24" });
+// Original     const hbox = new St.BoxLayout({ style_class: "panel-status-menu-box" });
+      const gicon = Gio.icon_new_for_string(Me.path + "/icons/docker-symbolic.svg");
+// Original     const dockerIcon = new St.Icon({ gicon: gicon, icon_size: "24" });
+      const panelIcon = new St.Icon({ gicon: gicon, style_class: "system-status-icon", icon_size: "20" });
 
-      hbox.add_child(dockerIcon);
+/* Original     hbox.add_child(panelIcon);
       hbox.add_child(arrowIcon(St.Side.BOTTOM));
-      this.add_child(hbox);
+      this.add_child(hbox);*/
+      this.actor.add_child(panelIcon);
       this.connect("button_press_event", this._refreshMenu.bind(this));
 
       this._renderMenu();
