@@ -21,7 +21,7 @@ The following actions are available from the menu per Docker container:
 
 You can install this extension by following this [link](https://extensions.gnome.org/extension/2224/easy-docker-containers/).
 
-## Credits
+## Contributors
 
 - [kiuma](https://github.com/RedSoftwareSystems)
 - [gpouilloux](https://github.com/gpouilloux/gnome-shell-extension-docker)
