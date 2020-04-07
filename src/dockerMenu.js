@@ -19,7 +19,7 @@ var DockerMenu = GObject.registerClass(
 // Original     const hbox = new St.BoxLayout({ style_class: "panel-status-menu-box" });
       const gicon = Gio.icon_new_for_string(Me.path + "/icons/docker-symbolic.svg");
 // Original     const dockerIcon = new St.Icon({ gicon: gicon, icon_size: "24" });
-      const panelIcon = new St.Icon({ gicon: gicon, style_class: "system-status-icon", icon_size: "20" });
+      const panelIcon = new St.Icon({ gicon: gicon, style_class: "system-status-icon", icon_size: "16" });
 
 /* Original     hbox.add_child(panelIcon);
       hbox.add_child(arrowIcon(St.Side.BOTTOM));
