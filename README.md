@@ -4,7 +4,7 @@ When installing this extension, you will be able to generally control your avail
 
 ## Screenshot
 
-![Screenshot](/resources/screenshot.jpg)
+![Screenshot](./resources/screenshot.jpg)
 
 ## Usage
 
