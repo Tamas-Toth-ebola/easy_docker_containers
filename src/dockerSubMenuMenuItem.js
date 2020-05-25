@@ -16,8 +16,8 @@ const GObject = imports.gi.GObject;
  *
  * @return {Object} an St.Icon instance
  */
-const _gicon = (name = "docker-container-unavailable-symbolic") => Gio.icon_new_for_string(Me.path + "/icons/" + name + ".svg");
-const _menuIcon = (name = "docker-container-unavailable-symbolic", styleClass = "system-status-icon") => new St.Icon({ gicon: _gicon(name), style_class: styleClass, icon_size: "16" });
+const gioIcon = (name = "docker-container-unavailable-symbolic") => Gio.icon_new_for_string(Me.path + "/icons/" + name + ".svg");
+const menuIcon = (name = "docker-container-unavailable-symbolic", styleClass = "system-status-icon") => new St.Icon({ gicon: gioIcon(name), style_class: styleClass, icon_size: "16" });
 
 /**
  * Get the status of a container from the status message obtained with the docker command
@@ -39,15 +39,15 @@ const getStatus = statusMessage => {
 var DockerSubMenu = GObject.registerClass(
 
   class DockerSubMenu extends PopupSubMenuMenuItem {
-  _init(containerName, containerStatusMessage) {
+  _init(projectName, containerName, containerStatusMessage) {
     
-    super._init(containerName);
+    super._init(projectName + containerName);
     
     switch (getStatus(containerStatusMessage)) {
       
       case "stopped":
         this.insert_child_at_index(
-          _menuIcon("docker-container-symbolic", "status-stopped"),
+          menuIcon("docker-container-symbolic", "status-stopped"),
           1
         );
         
@@ -55,14 +55,14 @@ var DockerSubMenu = GObject.registerClass(
           new DockerMenuItem(
             containerName,
             "start",
-            _menuIcon("docker-container-start-symbolic",)
+            menuIcon("docker-container-start-symbolic",)
           )
         );
       break;
       
       case "running":
         this.insert_child_at_index(
-          _menuIcon("docker-container-symbolic", "status-running"),
+          menuIcon("docker-container-symbolic", "status-running"),
           1
         );
         
@@ -70,7 +70,7 @@ var DockerSubMenu = GObject.registerClass(
           new DockerMenuItem(
             containerName,
             "pause",
-            _menuIcon("docker-container-pause-symbolic",)
+            menuIcon("docker-container-pause-symbolic",)
           )
         );
         
@@ -78,7 +78,7 @@ var DockerSubMenu = GObject.registerClass(
           new DockerMenuItem(
             containerName,
             "stop",
-            _menuIcon("docker-container-stop-symbolic",)
+            menuIcon("docker-container-stop-symbolic",)
           )
         );
         
@@ -86,7 +86,7 @@ var DockerSubMenu = GObject.registerClass(
           new DockerMenuItem(
             containerName,
             "restart",
-            _menuIcon("docker-container-restart-symbolic",)
+            menuIcon("docker-container-restart-symbolic",)
           )
         );
         
@@ -94,14 +94,14 @@ var DockerSubMenu = GObject.registerClass(
           new DockerMenuItem(
             containerName,
             "exec",
-            _menuIcon("docker-container-exec-symbolic",)
+            menuIcon("docker-container-exec-symbolic",)
           )
         );
       break;
       
       case "paused":
         this.insert_child_at_index(
-          _menuIcon("docker-container-symbolic","status-paused"),
+          menuIcon("docker-container-symbolic","status-paused"),
           1
         );
         
@@ -109,14 +109,14 @@ var DockerSubMenu = GObject.registerClass(
           new DockerMenuItem(
             containerName,
             "unpause",
-            _menuIcon("docker-container-start-symbolic",)
+            menuIcon("docker-container-start-symbolic",)
           )
         );
       break;
       
       default:
         this.insert_child_at_index(
-          _menuIcon("docker-container-unavailable-symbolic", "status-undefined"),
+          menuIcon("docker-container-unavailable-symbolic", "status-undefined"),
           1
         );
       break;
@@ -126,7 +126,7 @@ var DockerSubMenu = GObject.registerClass(
         new DockerMenuItem(
           containerName,
           "logs",
-          _menuIcon("docker-container-logs-symbolic",)
+          menuIcon("docker-container-logs-symbolic",)
         )
       );
     }

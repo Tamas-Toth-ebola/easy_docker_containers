@@ -17,9 +17,9 @@ var DockerMenu = GObject.registerClass(
       super._init(menuAlignment, nameText);
       
       // Custom Docker icon as menu button
-      const _gicon = Gio.icon_new_for_string( Me.path + "/icons/docker-symbolic.svg" );
-      const _panelIcon = new St.Icon({ gicon: _gicon, style_class: "system-status-icon", icon_size: "16" });
-      this.actor.add_child(_panelIcon);
+      const gioIcon = (name = "docker-symbolic") => Gio.icon_new_for_string(Me.path + "/icons/" + name + ".svg");
+      const panelIcon = (name = "docker-symbolic", styleClass = "system-status-icon") => new St.Icon({ gicon: gioIcon(name), style_class: styleClass, icon_size: "16" });
+      this.actor.add_child(panelIcon("docker-symbolic",));
       this.connect("button_press_event", this._refreshMenu.bind(this));
       this._renderMenu();
     }
@@ -33,13 +33,19 @@ var DockerMenu = GObject.registerClass(
       }
     }
     
-    // Show docker menu icon only if installed and append docker containers
+    // Show docker menu icon only if installed, append docker containers, and manageable with current user without 'sudo'
     _renderMenu() {
       if (Docker.isDockerInstalled()) {
-        if (Docker.isDockerRunning()) {
-          this._feedMenu();
+        if (Docker.isUserInDockerGroup()) {
+          if (Docker.isDockerRunning()) {
+            this._feedMenu();
+          } else {
+            let errMsg = _("Docker daemon not started");
+            this.menu.addMenuItem(new PopupMenuItem(errMsg));
+            log(errMsg);
+          }
         } else {
-          let errMsg = _("Docker daemon not started");
+          let errMsg = _("Your user not in 'docker' group");
           this.menu.addMenuItem(new PopupMenuItem(errMsg));
           log(errMsg);
         }
@@ -57,7 +63,7 @@ var DockerMenu = GObject.registerClass(
         const containers = Docker.getContainers();
         if (containers.length > 0) {
           containers.forEach(container => {
-            const subMenu = new DockerSubMenu(container.name, container.status);
+            const subMenu = new DockerSubMenu(container.project, container.name, container.status);
             this.menu.addMenuItem(subMenu);
           });
         } else {

@@ -22,6 +22,21 @@ var dockerCommandsToLabels = {
 var isDockerInstalled = () => !!GLib.find_program_in_path("docker");
 
 /**
+ * Check if user is in 'docker' group (to manage Docker without 'sudo')
+ * @return {Boolean} whether current user is in 'docker' group or not
+ */
+var isUserInDockerGroup = () => {
+  const userName = GLib.get_user_name();
+  let userGroups = GLib.spawn_command_line_sync("groups " + userName)[1].toString();
+  let inDockerGroup = false;
+
+  userGroups = userGroups.match(/docker/); // Regex search for 'docker'
+  if (userGroups == "docker") inDockerGroup = true; 
+    
+  return inDockerGroup;
+};
+
+/**
  * Check if docker daemon is running
  * @return {Boolean} whether docker daemon is running or not
  */
@@ -54,7 +69,7 @@ var isDockerRunning = () => {
 
 /**
  * Get an array of containers
- * @return {Array} The array of containers as { name, status }
+ * @return {Array} The array of containers as { project, name, status }
  */
 var getContainers = () => {
   const [res, out, err, status] = GLib.spawn_command_line_sync(
@@ -69,7 +84,16 @@ var getContainers = () => {
     .filter(string => string.length > 0)
     .map(string => {
       const values = string.split(",");
+
+      // Get 'docker-compose' project name for the container
+      let projectName = GLib.spawn_command_line_sync("docker inspect -f '{{index .Config.Labels \"com.docker.compose.project\"}}' " + values[0])[1].toString();
+      projectName = projectName.replace("\n", "");
+      projectName = projectName.toUpperCase();
+      projectName = projectName;
+      if (projectName != "" ) projectName = projectName + " ∘ ";
+
       return {
+        project: projectName,
         name: values[0],
         status: values[1]
       };
