@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. *(The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).)*
 
+## [4] - 2020-05-25
+
+### Added
+
+- Added user in `docker` group verification as one more error handler.
+- Added `docker-compose` project name before the container in the Panel menu if available.
+
+### Changed
+
+- Code consolidation *(icon variable name)*.
+
+### Removed
+
 ## [3] - 2020-05-16
 
 ### Added

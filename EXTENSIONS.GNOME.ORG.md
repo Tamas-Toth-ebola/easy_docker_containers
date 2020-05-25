@@ -1,5 +1,7 @@
 # Docker Containers
 
+This file contains in one place all the required data of the GNOME Shell extension for extensions.gnome.org website to make perfect control of them and keep it in every aspect the up-to-date extraction of main README document.
+
 ## Homepage
 
 https://github.com/RedSoftwareSystems/easy_docker_containers
@@ -15,8 +17,7 @@ https://github.com/RedSoftwareSystems/easy_docker_containers
 ## Description
 
 ```A GNOME Shell extension (GNOME Panel applet) to be able to generally control your available Docker containers.
-
-The following actions are available from the GNOME Panel menu per Docker container:
+A GNOME Shell extension *(GNOME Panel applet)* to be able to generally control your available Docker containers.
 
 ----- USAGE -----
 
@@ -38,6 +39,7 @@ GNU - General Public License v3+: https://www.gnu.org/licenses/gpl-3.0.en.html
 ----- MORE DETAILS -----
 
 https://github.com/RedSoftwareSystems/easy_docker_containers/blob/master/README.md
+https://github.com/RedSoftwareSystems/easy_docker_containers/blob/master/CHANGELOG.md
 ```
 
 ---
