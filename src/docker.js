@@ -22,18 +22,16 @@ var dockerCommandsToLabels = {
 var isDockerInstalled = () => !!GLib.find_program_in_path("docker");
 
 /**
- * Check if user is in 'docker' group (to manage Docker without 'sudo')
- * @return {Boolean} whether current user is in 'docker' group or not
+ * Check if Linux user is in 'docker' group (to manage Docker without 'sudo')
+ * @return {Boolean} whether current Linux user is in 'docker' group or not
  */
 var isUserInDockerGroup = () => {
-  const userName = GLib.get_user_name();
-  let userGroups = GLib.spawn_command_line_sync("groups " + userName)[1].toString();
-  let inDockerGroup = false;
+  const _userName = GLib.get_user_name();
+  let _userGroups = GLib.spawn_command_line_sync("groups " + _userName)[1].toString();
+  let _inDockerGroup = false;
+  if (_userGroups.match(/\sdocker[\s\n]/g)) _inDockerGroup = true; // Regex search for ' docker ' or ' docker' in Linux user's groups
 
-  userGroups = userGroups.match(/docker/); // Regex search for 'docker'
-  if (userGroups == "docker") inDockerGroup = true; 
-    
-  return inDockerGroup;
+  return _inDockerGroup;
 };
 
 /**

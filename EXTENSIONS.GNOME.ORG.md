@@ -16,17 +16,24 @@ https://github.com/RedSoftwareSystems/easy_docker_containers
 
 ## Description
 
-```A GNOME Shell extension (GNOME Panel applet) to be able to generally control your available Docker containers.
-A GNOME Shell extension *(GNOME Panel applet)* to be able to generally control your available Docker containers.
+```
+A GNOME Shell extension (GNOME Panel applet) to be able to generally control your available Docker containers.
 
 ----- USAGE -----
 
-- Start (Will start the container.)
-- Stop (Will stop the container.)
-- Pause (Will pause the container.)
-- Restart (Will restart the container.)
-- Exec (Will log into the running container interactively through your default terminal application.)
-- Logs (Will start the running container's Docker logs in your default terminal application.)
+The following actions are available from the GNOME Panel menu per Docker container:
+
+- START (Will start the container.)
+- STOP (Will stop the container.)
+- PAUSE (Will pause the container.)
+- RESTART (Will restart the container.)
+- EXEC (Will login to the running container interactively through your default terminal application.)
+- LOGS (Will start the running container's Docker logs in your default terminal application.)
+
+----- PREREQUISITE -----
+
+1. Properly installed and already running Docker service.
+2. Corresponding Linux user in `docker` Linux group for manage 'Docker' without `sudo` permission.
 
 ----- CREDITS -----
 

@@ -14,22 +14,29 @@ The following actions are available from the GNOME Panel menu per Docker contain
 - **Stop** _(Will stop the container.)_
 - **Pause** _(Will pause the container.)_
 - **Restart** _(Will restart the container.)_
-- **Exec** _(Will log into the running container interactively through your default terminal application.)_
+- **Exec** _(Will login to the running container interactively through your default terminal application.)_
 - **Logs** _(Will start the running container's Docker logs in your default terminal application.)_
+
+## Prerequisite[^1]
+
+1. Properly installed and already running Docker service.
+2. Corresponding Linux user in `docker` Linux group for manage '*Docker*' without `sudo` permission.
+
+[^1]: independently from the extension itself
 
 ## Installation
 
-- You can simply install this extension from [it's extensions.gnome.org page](https://extensions.gnome.org/extension/2224/easy-docker-containers)[^1],
+- You can simply install this extension from [it's extensions.gnome.org page](https://extensions.gnome.org/extension/2224/easy-docker-containers)[^2],
   
-  [^1]: You could update it from here in the future.
+  [^2]: You could update it from here in the future.
   
-- **or** you can pull it from it's GitHub source code repository directly into it's required GNOME Shell directory [^2]
+- **or** you can pull it from it's GitHub source code repository directly into it's required GNOME Shell directory [^3]
 
   1.  `git clone https://github.com/RedSoftwareSystems/easy_docker_containers.git ~/.local/share/gnome-shell/extensions/easy_docker_containers@red.software.systems`
   2.  Restart your shell: **[ALT]** + **[F2]** + *'**r**'* + **[Enter]** *(or logout and login again)*
   3.  Enable the extension manually with '***GNOME Extensions***' application *(or with '**GNOME Tweaks**' application)*.
   
-  [^2]: DO not change this directory name!
+  [^3]: DO not change this directory name!
 
 
 ## Contributors

@@ -40,17 +40,17 @@ var DockerMenu = GObject.registerClass(
           if (Docker.isDockerRunning()) {
             this._feedMenu();
           } else {
-            let errMsg = _("Docker daemon not started");
+            let errMsg = _("Please start your Docker service first!\n(Seems Docker daemon not started yet.)");
             this.menu.addMenuItem(new PopupMenuItem(errMsg));
             log(errMsg);
           }
         } else {
-          let errMsg = _("Your user not in 'docker' group");
+          let errMsg = _("Please put your Linux user into `docker` group first!\n(Seems not in that yet.)");
           this.menu.addMenuItem(new PopupMenuItem(errMsg));
           log(errMsg);
         }
       } else {
-        let errMsg = _("Docker binary not found in PATH ");
+        let errMsg = _("Please properly install Docker service first!\n(Seems Docker binary not found in PATH yet.)");
         this.menu.addMenuItem(new PopupMenuItem(errMsg));
         log(errMsg);
       }
