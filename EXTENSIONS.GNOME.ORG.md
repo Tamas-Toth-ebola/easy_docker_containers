@@ -39,7 +39,7 @@ The following actions are available from the GNOME Panel menu per Docker contain
 
 This extension is a fork of gpouilloux's great original 'Gnome Shell extension for Docker' work: https://github.com/gpouilloux/gnome-shell-extension-docker
 
----- LICENSE -----
+----- LICENSE -----
 
 GNU - General Public License v3+: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -51,4 +51,4 @@ https://github.com/RedSoftwareSystems/easy_docker_containers/blob/master/CHANGEL
 
 ---
 
-[^1]: HighRes official GNOME Shell extension like puzzle in GNOME HIG color palette '**Green 5**' color *(#3d3846)* with the extension's GNOME Panel icon in GNOME HIG color palette '**Dark 3**' color *(#3d3846)* rendered in 256x256px with 16px margin.
+[^1]: HighRes official GNOME Shell extension like puzzle in GNOME HIG color palette '**Green 5**' color *(#3d3846)* with the extension's GNOME Panel icon in GNOME HIG color palette '**Light 3**' color *(#deddda)* rendered in 256x256px with 16px margin.
