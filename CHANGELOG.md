@@ -6,12 +6,12 @@ All notable changes to this project will be documented in this file. *(The forma
 
 ### Added
 
-- Count on running intances
-- Compatibility for podman with docker alias
+- Count on running instances
+- Compatibility for Podman with docker alias
 
-### Fix
+### Fixed
 
-- Terminal issue for non ubuntu distro. Fallback to gnome-terminal
+- Terminal issue for non Ubuntu distro. Fallback to gnome-terminal
 - St.Label deallocation problem
 
 ## [4] - 2020-05-25
@@ -24,8 +24,6 @@ All notable changes to this project will be documented in this file. *(The forma
 ### Changed
 
 - Code consolidation *(icon variable name)*.
-
-### Removed
 
 ## [3] - 2020-05-16
 
@@ -68,8 +66,6 @@ All notable changes to this project will be documented in this file. *(The forma
 - `Exec` submenu icon
 - Use of GLib.spawn_command_line_async instead of Gio.Subprocess to fix
   executon of gnome-terminal when running `Exec` and `Logs` commands.
-
-### Removed
 
 ## [1] - 2019-10-13
 
