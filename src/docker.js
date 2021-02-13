@@ -12,7 +12,7 @@ var dockerCommandsToLabels = {
   pause: "Pause",
   unpause: "Unpause",
   exec: "Exec",
-  logs: "Logs"
+  logs: "Logs",
 };
 
 /**
@@ -20,6 +20,8 @@ var dockerCommandsToLabels = {
  * @return {Boolean} whether docker is installed or not
  */
 var isDockerInstalled = () => !!GLib.find_program_in_path("docker");
+var isXTerminalEmulatorInstalled = () =>
+  !!GLib.find_program_in_path("x-terminal-emulator");
 
 /**
  * Check if Linux user is in 'docker' group (to manage Docker without 'sudo')
@@ -27,11 +29,17 @@ var isDockerInstalled = () => !!GLib.find_program_in_path("docker");
  */
 var isUserInDockerGroup = () => {
   const _userName = GLib.get_user_name();
-  let _userGroups = GLib.spawn_command_line_sync("groups " + _userName)[1].toString();
+  let _userGroups = ByteArray.toString(
+    GLib.spawn_command_line_sync("groups " + _userName)[1]
+  );
   let _inDockerGroup = false;
   if (_userGroups.match(/\sdocker[\s\n]/g)) _inDockerGroup = true; // Regex search for ' docker ' or ' docker' in Linux user's groups
 
   return _inDockerGroup;
+};
+
+var isPodmanInstalled = () => {
+  return !!GLib.find_program_in_path("podman") && !isDockerRunning();
 };
 
 /**
@@ -48,7 +56,7 @@ var isDockerRunning = () => {
   );
 
   const outReader = new Gio.DataInputStream({
-    base_stream: new Gio.UnixInputStream({ fd: out_fd })
+    base_stream: new Gio.UnixInputStream({ fd: out_fd }),
   });
 
   let dockerRunning = false;
@@ -79,21 +87,26 @@ var getContainers = () => {
     .apply(String, out)
     .trim()
     .split("\n")
-    .filter(string => string.length > 0)
-    .map(string => {
+    .filter((string) => string.length > 0)
+    .map((string) => {
       const values = string.split(",");
 
       // Get 'docker-compose' project name for the container
-      let projectName = GLib.spawn_command_line_sync("docker inspect -f '{{index .Config.Labels \"com.docker.compose.project\"}}' " + values[0])[1].toString();
+      let projectName = ByteArray.toString(
+        GLib.spawn_command_line_sync(
+          "docker inspect -f '{{index .Config.Labels \"com.docker.compose.project\"}}' " +
+            values[0]
+        )[1]
+      );
       projectName = projectName.replace("\n", "");
       projectName = projectName.toUpperCase();
       projectName = projectName;
-      if (projectName != "" ) projectName = projectName + " ∘ ";
+      if (projectName != "") projectName = projectName + " ∘ ";
 
       return {
         project: projectName,
         name: values[0],
-        status: values[1]
+        status: values[1],
       };
     });
 };
@@ -105,25 +118,18 @@ var getContainers = () => {
  * @param {Function} callback A callback that takes the status, command, and stdErr
  */
 var runCommand = async (command, containerName, callback) => {
-  var cmd = [""];
+  var cmd = isXTerminalEmulatorInstalled()
+    ? ["x-terminal-emulator", "-e", "sh", "-c"]
+    : ["gnome-terminal", "--", "sh", "-c"];
   switch (command) {
     case "exec":
-      cmd = [
-        "x-terminal-emulator",
-        "-e",
-        "bash",
-        "-c",      
-        "'docker exec -it " + containerName + " bash; exec $SHELL'"
-      ];
+      cmd = [...cmd, "'docker exec -it " + containerName + " sh; exec $SHELL'"];
       GLib.spawn_command_line_async(cmd.join(" "));
       break;
     case "logs":
       cmd = [
-        "x-terminal-emulator",
-        "-e",
-        "bash",
-        "-c",
-        "'docker logs -f --tail 2000 " + containerName + "; exec $SHELL' "
+        ...cmd,
+        "'docker logs -f --tail 2000 " + containerName + "; exec $SHELL' ",
       ];
       GLib.spawn_command_line_async(cmd.join(" "));
       break;
@@ -144,7 +150,7 @@ async function execCommand(
       argv: argv,
       // There are also other types of flags for merging stdout/stderr,
       // redirecting to /dev/null or inheriting the parent's pipes
-      flags: Gio.SubprocessFlags.STDOUT_PIPE
+      flags: Gio.SubprocessFlags.STDOUT_PIPE,
     });
 
     // Classes that implement GInitable must be initialized before use, but
